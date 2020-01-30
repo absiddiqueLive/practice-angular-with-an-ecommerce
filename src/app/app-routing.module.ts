@@ -11,8 +11,10 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { OrderSuccessComponent } from './components/order-success/order-success.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
+
 import { ProductsComponent as AdminProductsComponent } from './components/admin/products/products.component';
 import { OrdersComponent as AdminOrdersComponent } from './components/admin/orders/orders.component';
+import { ProductFormComponent as AdminProductFormComponent } from './components/admin/product-form/product-form.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -32,6 +34,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
 
+  {
+    path: 'admin/product/new',
+    component: AdminProductFormComponent,
+    canActivate: [AuthGuard, AdminGuard]
+  },
   {
     path: 'admin/products',
     component: AdminProductsComponent,

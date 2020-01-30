@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
@@ -25,6 +26,7 @@ import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { ProductsComponent as AdminProductsComponent } from './components/admin/products/products.component';
 import { OrdersComponent as AdminOrdersComponent } from './components/admin/orders/orders.component';
 import { LoginComponent } from './components/login/login.component';
+import { ProductFormComponent } from './components/admin/product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { LoginComponent } from './components/login/login.component';
     MyOrdersComponent,
     AdminProductsComponent,
     AdminOrdersComponent,
-    LoginComponent
+    LoginComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +49,7 @@ import { LoginComponent } from './components/login/login.component';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    FormsModule,
     NgbModule
   ],
   providers: [
