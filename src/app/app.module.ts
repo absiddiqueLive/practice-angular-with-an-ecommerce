@@ -10,6 +10,8 @@ import { environment } from './../environments/environment';
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { UserService } from './services/user.service';
+import { ProductService } from './services/product.service';
+import { ProductCategoryService } from './services/product-category.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -46,7 +48,13 @@ import { LoginComponent } from './components/login/login.component';
     AngularFireDatabaseModule,
     NgbModule
   ],
-  providers: [AuthService, AuthGuard, UserService],
+  providers: [
+    AuthService,
+    AuthGuard,
+    UserService,
+    ProductCategoryService,
+    ProductService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
