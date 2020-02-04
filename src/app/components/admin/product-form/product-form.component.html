@@ -1,42 +1,57 @@
-<form #pForm="ngForm" (ngSubmit)="save(pForm.value)">
-  <div class="form-group">
-    <label for="title">Title</label>
-    <input #title="ngModel" ngModel type="text" name="title" id="title" class="form-control" required />
-    <div class="alert alert-danger" *ngIf="(title.touched || title.dirty) && title.invalid">
-      Title is required.
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="price">Price</label>
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="price-addon">$</span>
+<div class="row">
+  <div class="col-md-6">
+    <form #pForm="ngForm" (ngSubmit)="save(pForm.value)">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input #title="ngModel" ngModel type="text" name="title" id="title" class="form-control" required
+          minlength="3" />
+        <div class="alert alert-danger" *ngIf="(title.touched || title.dirty) && title.invalid">
+          Title is required.
+        </div>
       </div>
-      <input #price="ngModel" ngModel name="price" id="price" type="number" class="form-control"
-        aria-describedby="price-addon" required>
-    </div>
-    <div class="alert alert-danger" *ngIf="(price.touched || price.dirty) && price.invalid">
-      Price is required.
+      <div class="form-group">
+        <label for="price">Price</label>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="price-addon">৳</span>
+          </div>
+          <input #price="ngModel" ngModel name="price" id="price" type="number" class="form-control"
+            aria-describedby="price-addon" required pattern="^(\d{1,2}|100)$" />
+        </div>
+        <div class="alert alert-danger" *ngIf="(price.touched || price.dirty) && price.invalid">
+          Price is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select #category="ngModel" ngModel name="category" id="category" class="form-control" required>
+          <option value="">Select Category</option>
+          <option *ngFor="let category of categories$ | async" [value]="category.key">
+            {{ category.payload.val().name }}
+          </option>
+        </select>
+        <div class="alert alert-danger" *ngIf="(category.touched || category.dirty) && category.invalid">
+          Category is required.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="imageUrl">Image Url</label>
+        <input type="text" #imageUrl="ngModel" ngModel name="imageUrl" id="imageUrl" class="form-control" required
+          pattern="(https?:\/\/.*\.(?:png|jpg))" />
+        <div class="alert alert-danger" *ngIf="(imageUrl.touched || imageUrl.dirty) && imageUrl.invalid">
+          Image url is required.
+        </div>
+      </div>
+      <button class="btn btn-primary">Save</button>
+    </form>
+  </div>
+  <div class="col-md-6">
+    <div class="card" style="width: 18rem;">
+      <img [src]="imageUrl.value" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">{{ title.value }}</h5>
+        <p class="card-text">{{ price.value | currency:"BDT":"৳" }}</p>
+      </div>
     </div>
   </div>
-  <div class="form-group">
-    <label for="category">Category</label>
-    <select #category="ngModel" ngModel name="category" id="category" class="form-control" required>
-      <option value="">Select Category</option>
-      <option *ngFor="let category of categories$ | async" [value]="category.key">
-        {{ category.payload.val().name }}
-      </option>
-    </select>
-    <div class="alert alert-danger" *ngIf="(category.touched || category.dirty) && category.invalid">
-      Category is required.
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="imageUrl">Image Url</label>
-    <input type="text" #imageUrl="ngModel" ngModel name="imageUrl" id="imageUrl" class="form-control" required />
-    <div class="alert alert-danger" *ngIf="(imageUrl.touched || imageUrl.dirty) && imageUrl.invalid">
-      Image url is required.
-    </div>
-  </div>
-  <button class="btn btn-primary">Save</button>
-</form>
+</div>
