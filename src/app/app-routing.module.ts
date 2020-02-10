@@ -17,7 +17,7 @@ import { OrdersComponent as AdminOrdersComponent } from './components/admin/orde
 import { ProductFormComponent as AdminProductFormComponent } from './components/admin/product-form/product-form.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: ProductsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
