@@ -1,15 +1,32 @@
 <div class="row">
-  <ng-container *ngFor="let product of products$ | async; let i = index">
-    <div class="col mb-5">
-      <div class="card" style="width: 18rem;">
-        <img [src]="product.imageUrl" class="card-img-top" [alt]="product.title" style="width: 286px; height: 190px;">
-        <div class="card-body">
-          <h5 class="card-title">{{ product.title }}</h5>
-          <p class="card-text">{{ product.price | currency:"BDT":"৳" }}</p>
-          <a href="#" class="btn btn-primary">Add to Cart</a>
-        </div>
-      </div>
+  <div class="col-3">
+    <h4 class="text-center mb-2">Product Categories</h4>
+    <div class="list-group">
+      <a class="list-group-item list-group-item-action" routerLink="/" [class.active]="!filteredCategory">
+        All Categories
+      </a>
+      <a *ngFor="let category of categories$ | async" class="list-group-item list-group-item-action" routerLink="/"
+        [queryParams]="{ category: category.key }" [class.active]="filteredCategory === category.key">
+        {{ category.name }}
+      </a>
     </div>
-    <!-- <div *ngIf="(i+1)%2===0" class="w-100"></div> -->
-  </ng-container>
+  </div>
+  <div class="col">
+    <div class="row">
+      <ng-container *ngFor="let product of products; let i = index">
+        <div class="col mb-5">
+          <div class="card" style="width: 18rem;">
+            <img [src]="product.imageUrl" class="card-img-top" [alt]="product.title"
+              style="width: 286px; height: 190px;">
+            <div class="card-body">
+              <h5 class="card-title">{{ product.title }}</h5>
+              <p class="card-text">{{ product.price | currency:"BDT":"৳" }}</p>
+              <a href="#" class="btn btn-primary">Add to Cart</a>
+            </div>
+          </div>
+        </div>
+        <!-- <div *ngIf="(i+1)%2===0" class="w-100"></div> -->
+      </ng-container>
+    </div>
+  </div>
 </div>

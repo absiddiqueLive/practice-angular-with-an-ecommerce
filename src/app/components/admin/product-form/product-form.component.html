@@ -29,7 +29,7 @@
           required>
           <option value="">Select Category</option>
           <option *ngFor="let category of categories$ | async" [value]="category.key">
-            {{ category.payload.val().name }}
+            {{ category.name }}
           </option>
         </select>
         <div class="alert alert-danger" *ngIf="(category.touched || category.dirty) && category.invalid">

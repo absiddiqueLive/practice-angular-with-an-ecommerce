@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 
@@ -7,24 +8,19 @@ import { AngularFireDatabase } from '@angular/fire/database';
 export class ProductCategoryService {
   constructor(private db: AngularFireDatabase) {}
 
-  getCategories() {
+  getAll() {
     const result = this.db
       .list('/categories', ref => ref.orderByChild('name'))
       // .valueChanges()
-      .snapshotChanges();
-
-    /*
-    .pipe(
+      .snapshotChanges()
+      .pipe(
         map(changes => {
-          console.log(changes);
-          changes.map(c => {
-            console.log(c);
-            console.log({ id: c.payload.key, ...c.payload.val() });
-            return { id: c.payload.key, ...c.payload.val() };
+          return changes.map(category => {
+            const payload: any = category.payload.val();
+            return { key: category.payload.key, ...payload };
           });
         })
       );
-      */
 
     return result;
   }

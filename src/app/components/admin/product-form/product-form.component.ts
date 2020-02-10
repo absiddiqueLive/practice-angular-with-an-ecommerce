@@ -35,7 +35,7 @@ export class ProductFormComponent implements OnInit {
         });
     }
 
-    this.categories$ = this.categoryService.getCategories();
+    this.categories$ = this.categoryService.getAll();
   }
 
   save(product: Product) {
