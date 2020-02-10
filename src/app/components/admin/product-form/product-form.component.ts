@@ -1,5 +1,4 @@
-import { async } from '@angular/core/testing';
-import { map, switchMap, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -46,8 +45,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   save(product: IProduct) {
-    console.log(product);
-
     if (product.key) {
       this.productService.update(product);
     } else {

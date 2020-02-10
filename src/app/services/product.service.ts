@@ -1,6 +1,8 @@
 import { IProduct } from './../components/admin/product-form/product-form.component';
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase, SnapshotAction } from '@angular/fire/database';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +27,20 @@ export class ProductService {
     this.db.object('/products/' + id).remove();
   }
 
-  getAll() {
-    return this.db.list('/products').snapshotChanges();
+  getAll(): Observable<SnapshotAction<IProduct>[]> {
+    return this.db
+      .list('/products')
+      .snapshotChanges()
+      .pipe(
+        map(products => {
+          return products.map(product => {
+            const key: string = product.key;
+            const payload: any = product.payload.val();
+
+            return { key, ...payload };
+          });
+        })
+      );
   }
 
   getById(id: string) {
