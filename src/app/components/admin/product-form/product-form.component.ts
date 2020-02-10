@@ -56,5 +56,14 @@ export class ProductFormComponent implements OnInit {
     this.router.navigate(['/admin/products']);
   }
 
+  delete() {
+    if (!confirm('Are you sure, you want to delete ?')) {
+      return;
+    }
+
+    this.productService.delete(this.product.key);
+    this.router.navigate(['/admin/products']);
+  }
+
   ngOnInit() {}
 }
