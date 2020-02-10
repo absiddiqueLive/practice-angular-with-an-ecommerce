@@ -1,8 +1,8 @@
-import { IProduct } from './../components/admin/product-form/product-form.component';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, SnapshotAction } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,13 @@ import { map } from 'rxjs/operators';
 export class ProductService {
   constructor(private db: AngularFireDatabase) {}
 
-  create(product: IProduct) {
+  create(product: Product) {
     delete product.key;
 
     return this.db.list('/products').push(product);
   }
 
-  update(product: IProduct) {
+  update(product: Product) {
     const key = product.key;
     delete product.key;
 
@@ -27,7 +27,7 @@ export class ProductService {
     this.db.object('/products/' + id).remove();
   }
 
-  getAll(): Observable<SnapshotAction<IProduct>[]> {
+  getAll(): Observable<Product[]> {
     return this.db
       .list('/products')
       .snapshotChanges()

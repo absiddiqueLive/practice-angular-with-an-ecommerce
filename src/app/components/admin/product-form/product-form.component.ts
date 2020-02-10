@@ -1,17 +1,11 @@
-import { take } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { take } from 'rxjs/operators';
+
+import { Product } from 'src/app/models/product';
 
 import { ProductService } from 'src/app/services/product.service';
 import { ProductCategoryService } from 'src/app/services/product-category.service';
-
-export interface IProduct {
-  key?: string;
-  title: string;
-  price: number;
-  category: string;
-  imageUrl: string;
-}
 
 @Component({
   selector: 'app-product-form',
@@ -19,7 +13,7 @@ export interface IProduct {
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
-  product: IProduct = {} as IProduct;
+  product: Product = {} as Product;
   categories$;
 
   constructor(
@@ -44,7 +38,7 @@ export class ProductFormComponent implements OnInit {
     this.categories$ = this.categoryService.getCategories();
   }
 
-  save(product: IProduct) {
+  save(product: Product) {
     if (product.key) {
       this.productService.update(product);
     } else {
