@@ -49,12 +49,6 @@
     </form>
   </div>
   <div class="col-md-6">
-    <div class="card" style="width: 18rem;">
-      <img *ngIf="imageUrl.value" [src]="imageUrl.value" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">{{ title.value }}</h5>
-        <p class="card-text">{{ price.value | currency:"BDT":"৳" }}</p>
-      </div>
-    </div>
+    <app-product-card [product]="product" [show-actions]="false"></app-product-card>
   </div>
 </div>
