@@ -28,7 +28,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.categories$ = this.categoryService.getAll();
-    this.productService
+    this.subscription = this.productService
       .getAll()
       .pipe(
         switchMap(products => {

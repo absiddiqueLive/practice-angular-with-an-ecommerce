@@ -3,6 +3,6 @@
   <div class="card-body">
     <h5 class="card-title">{{ product.title }}</h5>
     <p class="card-text">{{ product.price | currency:"BDT":"৳" }}</p>
-    <a *ngIf="showActions" href="#" class="btn btn-primary">Add to Cart</a>
+    <button *ngIf="showActions" (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
   </div>
 </div>
