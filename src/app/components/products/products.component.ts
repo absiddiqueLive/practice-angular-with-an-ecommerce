@@ -16,19 +16,16 @@ import { ProductCategoryService } from 'src/app/services/product-category.servic
 export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   allProducts: Product[] = [];
-  categories$: Observable<any[]>;
-  filteredCategory: string;
+  filteredCategory = '';
   subscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService,
-    private categoryService: ProductCategoryService
+    private productService: ProductService
   ) {}
 
   ngOnInit() {
-    this.categories$ = this.categoryService.getAll();
-    this.productService
+    this.subscription = this.productService
       .getAll()
       .pipe(
         switchMap(products => {
