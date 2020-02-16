@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 import { Product } from 'src/app/models/product';
 
 import { ProductService } from 'src/app/services/product.service';
-import { ProductCategoryService } from 'src/app/services/product-category.service';
+import { ShoppingCartService } from 'src/app/services/shopping-cart.service';
 
 @Component({
   selector: 'app-products',
@@ -14,6 +14,7 @@ import { ProductCategoryService } from 'src/app/services/product-category.servic
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit, OnDestroy {
+  cart: any;
   products: Product[] = [];
   allProducts: Product[] = [];
   filteredCategory = '';
@@ -21,11 +22,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: ShoppingCartService
   ) {}
 
-  ngOnInit() {
-    // this.categories$ = this.categoryService.getAll();
+  async ngOnInit(): Promise<void> {
+    this.subscription = (await this.cartService.get()).subscribe(
+      cart => (this.cart = cart)
+    );
+
     this.subscription = this.productService
       .getAll()
       .pipe(

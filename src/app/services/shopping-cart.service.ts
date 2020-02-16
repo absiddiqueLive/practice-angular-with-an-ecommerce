@@ -3,6 +3,8 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { take } from 'rxjs/operators';
 
 import { Product } from 'src/app/models/product';
+import { ShoppingCart } from '../models/shopping-cart';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,8 @@ export class ShoppingCartService {
 
   async get() {
     const cartId = await this.getOrCreateId();
-    return this.db.object('/shopping-carts/' + cartId);
+    return this.db.object('/shopping-carts/' + cartId).valueChanges();
+    // .pipe(take(1))
   }
 
   private async getOrCreateId(): Promise<string> {
@@ -37,6 +40,14 @@ export class ShoppingCartService {
   }
 
   async addToCart(product: Product) {
+    this.updateItemQuantity(product, 1);
+  }
+
+  async removeFromCart(product: Product) {
+    this.updateItemQuantity(product, -1);
+  }
+
+  private async updateItemQuantity(product: Product, change: number) {
     const cartId: string = await this.getOrCreateId();
     const items$ = this.getItem(cartId, product.key);
 
@@ -44,7 +55,7 @@ export class ShoppingCartService {
       .valueChanges()
       .pipe(take(1))
       .subscribe((item: any) => {
-        items$.update({ product, quantity: (item?.quantity || 0) + 1 });
+        items$.update({ product, quantity: (item?.quantity || 0) + change });
       });
   }
 }
