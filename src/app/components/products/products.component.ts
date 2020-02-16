@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { Product } from 'src/app/models/product';
@@ -16,18 +16,16 @@ import { ProductCategoryService } from 'src/app/services/product-category.servic
 export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   allProducts: Product[] = [];
-  categories$: Observable<any[]>;
-  filteredCategory: string;
+  filteredCategory = '';
   subscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService,
-    private categoryService: ProductCategoryService
+    private productService: ProductService
   ) {}
 
   ngOnInit() {
-    this.categories$ = this.categoryService.getAll();
+    // this.categories$ = this.categoryService.getAll();
     this.subscription = this.productService
       .getAll()
       .pipe(
