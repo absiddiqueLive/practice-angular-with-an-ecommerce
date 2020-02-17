@@ -23,7 +23,7 @@ export class ShoppingCartService {
     return this.db
       .object('/shopping-carts/' + cartId)
       .valueChanges()
-      .pipe(map((data: ShoppingCart) => new ShoppingCart(data.items)));
+      .pipe(map((data: any) => new ShoppingCart(data.items)));
   }
 
   private async getOrCreateId(): Promise<string> {
@@ -49,6 +49,11 @@ export class ShoppingCartService {
     this.updateItemQuantity(product, -1);
   }
 
+  async clearCart() {
+    const cartId = await this.getOrCreateId();
+    this.db.object('/shopping-carts/' + cartId + '/items/').remove();
+  }
+
   private async updateItemQuantity(product: Product, change: number) {
     const cartId: string = await this.getOrCreateId();
     const items$ = this.getItem(cartId, product.key);
@@ -57,7 +62,14 @@ export class ShoppingCartService {
       .valueChanges()
       .pipe(take(1))
       .subscribe((item: any) => {
-        items$.update({ product, quantity: (item?.quantity || 0) + change });
+        const quantity = (item?.quantity || 0) + change;
+
+        if (quantity <= 0) {
+          items$.remove();
+          return;
+        }
+
+        items$.update({ product, quantity });
       });
   }
 }
