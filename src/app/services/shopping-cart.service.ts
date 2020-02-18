@@ -29,7 +29,7 @@ export class ShoppingCartService {
     return this.db
       .object('/shopping-carts/' + cartId)
       .valueChanges()
-      .pipe(map((data: any) => new ShoppingCart(data.items)));
+      .pipe(map((data: any) => new ShoppingCart(data?.items)));
   }
 
   private async getOrCreateId(): Promise<string> {
