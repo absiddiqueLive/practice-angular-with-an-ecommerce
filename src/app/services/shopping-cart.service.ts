@@ -12,10 +12,16 @@ import { Observable } from 'rxjs';
 export class ShoppingCartService {
   constructor(private db: AngularFireDatabase) {}
 
-  create() {
+  create(): string {
+    const localCart = localStorage.getItem('cartId');
+
+    if (localCart) {
+      return localCart;
+    }
+
     return this.db.list('/shopping-carts').push({
       createdAt: new Date().getTime()
-    });
+    }).key;
   }
 
   async get(): Promise<Observable<ShoppingCart>> {
@@ -27,14 +33,11 @@ export class ShoppingCartService {
   }
 
   private async getOrCreateId(): Promise<string> {
-    const localCart: string = localStorage.getItem('cartId');
+    const newCartId = await this.create();
 
-    if (localCart) {
-      return localCart;
-    }
+    localStorage.setItem('cartId', newCartId);
 
-    const result = await this.create();
-    return result.key;
+    return newCartId;
   }
 
   getItem(cartId: string, productKey: string) {
