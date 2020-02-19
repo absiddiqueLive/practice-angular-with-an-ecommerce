@@ -9,8 +9,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from './../environments/environment';
 
 import { AuthService } from './services/auth.service';
-import { AuthGuard } from './services/auth-guard.service';
 import { UserService } from './services/user.service';
+import { OrderService } from './services/order.service';
+import { AuthGuard } from './services/auth-guard.service';
 import { ProductService } from './services/product.service';
 import { ShoppingCartService } from './services/shopping-cart.service';
 import { ProductCategoryService } from './services/product-category.service';
@@ -65,7 +66,8 @@ import { CartQuantityComponent } from './components/products/cart-quantity/cart-
     UserService,
     ProductCategoryService,
     ProductService,
-    ShoppingCartService
+    ShoppingCartService,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })
